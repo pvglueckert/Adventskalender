@@ -1,0 +1,101 @@
+/* Allgemeine Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: url('../images/background/snowy.jpg') no-repeat center center/cover;
+    color: #fff;
+    height: 100vh;
+}
+
+header {
+    background-color: rgba(200, 0, 0, 0.7);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.university-name {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 5px #ff0;
+    margin: 0;
+}
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 80px;
+    flex: 1;
+    align-items: flex-start;
+}
+
+.left-panel, .right-panel {
+    background-color: rgba(255, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    width: 25%;
+    min-height: 300px;
+}
+
+.center-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+    position: relative;
+}
+
+/* Haupt-Türchen */
+.main-door {
+    width: 150px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid white;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    position: relative;
+}
+
+.door-text {
+    position: absolute;
+    bottom: -30px;
+    font-size: 1rem;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.main-door:hover {
+    transform: scale(1.1) rotate(-2deg);
+    background: rgba(255, 0, 0, 0.5);
+    box-shadow: 0 0 40px rgba(255,0,0,0.8);
+}
+
+.main-door:hover .door-text {
+    opacity: 1;
+}
+
+button {
+    margin: 5px 0;
+    padding: 10px 20px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background-color: #ff4d4d;
+}
