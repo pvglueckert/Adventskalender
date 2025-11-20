@@ -1,5 +1,7 @@
 # Adventskalender
-Wir bauen einen innovativen Adventskalender bei dem sich Schüler und Arbeiter besser kennenlernen können
-Wir schaffen das Jungs ich glaube an uns git
-hi ich bin salih kleiner test hahahaha
-alex suckt
+
+# 20.11.2025
+Grundgerüst der Website erstellt, man hat sich auf ein Konzept geeinigt. Sowie auf's ungefähre Aussehen der Website.
+  - Ordnerstruktur angelegt 
+  - Dateien angelegt welche bis dato relevant sind
+
