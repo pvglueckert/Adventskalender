@@ -9,11 +9,20 @@ body {
 }
 
 header {
-    background-color: rgba(200, 0, 0, 0.7);
+    background-color: #003366;
     padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    text-align:left;
+    display: flex
 }
+.logo {
+    height: 60px;    
+    width: auto;
+    transition: transform 0.2s ease;
+    cursor: pointer;    
+    }
+    .logo:hover {
+        transform: scale(1.07); 
+    }
 
 .university-name {
     font-family: 'Mountains of Christmas', cursive;
