@@ -1,4 +1,3 @@
-/* Allgemeine Styles */
 body {
     margin: 0;
     padding: 0;
@@ -7,6 +6,81 @@ body {
     color: #fff;
     height: 100vh;
 }
+
+
+.christmas-tree-svg {
+    position: absolute;
+    top: 60%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+    max-height: 80px;
+    width: auto;
+    overflow: visible;
+    z-index: 55;
+}
+
+
+.christmas-tree-svg path {
+    fill: #379157;
+    stroke: #379157;
+    stroke-width: .2;
+    
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    
+    animation: star 8s ease-in-out infinite;
+    animation-delay: calc( var(--no) * .025s );
+    transform-box: fill-box;
+}
+
+
+@keyframes star {
+  0% {
+    transform: scale(0);
+    animation-timing-function: cubic-bezier(.74,1.72,.57,1.01)
+  }
+  10% {
+    transform: scale(1);
+  }
+  65% {
+    transform: translateY(0px) scale(1);
+  }
+  75% {
+    transform: translateY(50px) scale(0);
+  }
+  100% {
+    transform: translateY( 0px ) scale(0);
+  }
+}
+
+
+
+#spline-container {
+    position: fixed;
+    top: 90px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 90px);
+    z-index: -1;
+    opacity: 1; 
+    pointer-events: none;
+    background-color: transparent;
+    transition: opacity 0.7s ease-in-out; 
+    transform: translateY(0);
+}
+
+#canvas3d {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#spline-container.is-active {
+    opacity: 1; 
+    z-index: 200; 
+    pointer-events: auto; 
+}
+
 
 header {
     position: relative;
@@ -30,86 +104,66 @@ header {
     bottom: 10px;
     display: flex;
     place-items: center;
-    
-  }
-  
-  /* runder Plus-Button */
-  /* runder Plus-Button (der weiße Kreis) */
+}
+
 .fab-toggle {
     width: 40px; height: 40px;
     border: 0; border-radius: 50%;
     background: #fff; color: #003366;
     box-shadow: 0 8px 20px rgba(0,0,0,.25);
-    
-    /* ZENTRIERUNG: Verwende Flexbox, um das Plus zu zentrieren */
-    display: flex; 
-    justify-content: center; /* Horizontale Zentrierung */
-    align-items: center;     /* Vertikale Zentrierung */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    
     cursor: pointer;
     transition: transform .25s ease, box-shadow .25s ease, background .2s;
-  }
-  .fab-toggle:hover { 
-      transform: scale(1.06); 
-      box-shadow: 0 12px 26px rgba(0,0,0,.28); 
-  }
-  
-/* Das Plus-Symbol (SVG) */
-.fab-plus { 
-    width: 20px; 
-    height: 20px; 
-    transition: transform .25s ease;
-    
-    /* WICHTIG: Verhindert, dass das SVG schrumpft und erzwingt die Box-Dimensionen */
-    flex-shrink: 0;
-    display: block; /* Stellt sicher, dass es sich wie ein Block-Element verhält */
 }
-  /* Menü: Icons liegen „unter“ dem Button und fahren nach links raus */
-  .fab-menu {
+.fab-toggle:hover {
+    transform: scale(1.06);
+    box-shadow: 0 12px 26px rgba(0,0,0,.28);
+}
+.fab-plus {
+    width: 20px;
+    height: 20px;
+    transition: transform .25s ease;
+    flex-shrink: 0;
+    display: block;
+}
+.fab-menu {
     position: absolute;
-    right: 50px; bottom: 4px;
-    display:flex; gap: 10px;
-    pointer-events: none; /* solange zu, sind sie nicht klickbar */
-
-    flex-direction: row-reverse; /* Muss für die Animation so bleiben */
-    align-items: center;
-  }
-  
-  /* einzelnes Icon */
-  .fab-item {
-                   /* Abstand zwischen Items (näher am Button) */
+    right: 52px; bottom: 4px;
+    display:flex; gap: 5px;
+    pointer-events: none;
+}
+.fab-item {
     width: 40px; height: 40px;
     border-radius: 50%;
     background: #fff;
-    color: #003366;               /* Icon-Farbe */
+    color: #003366;
     display: grid; place-items: center;
     box-shadow: 0 8px 18px rgba(0,0,0,.22);
     transform: translateX(0) scale(.8);
     opacity: 0;
     transition: transform .28s ease, opacity .2s ease, box-shadow .2s ease;
     will-change: transform;
-  }
-  .fab-item:hover {
+}
+.fab-item:hover {
     box-shadow: 0 12px 24px rgba(0,0,0,.28);
-  }
-  
-  
-  .fab-icon { width: 22px; height: 22px; }
-  
-  /* Wenn geöffnet → fahre die Items gestaffelt raus */
-  .social-fab.open .fab-item {
+}
+.social-fab.open .fab-item:hover {
+    transform: translateX(calc(var(--i) * -1 * var(--dist))) scale(1.08);
+}
+.fab-icon { width: 22px; height: 22px; }
+.social-fab.open .fab-item {
     pointer-events: auto;
     opacity: 1;
     transform: translateX(calc(var(--i) * -1 * var(--dist))) scale(1);
-  }
-  /* Plus in ein X drehen */
-  .social-fab.open .fab-plus { transform: rotate(45deg); }
-  .social-fab.open .fab-menu { pointer-events: auto; }
+}
+.social-fab.open .fab-plus { transform: rotate(45deg); }
+.social-fab.open .fab-menu { pointer-events: auto; }
 
-  /* Korrigiert den zu großen horizontalen Abstand beim Facebook-Icon */
 .fab-facebook {
-    margin-right: -2px; /* Oder -3px, probiere den Wert aus, bis es passt */
+    margin-right: -2px;
 }
 
 
@@ -119,12 +173,11 @@ header {
     margin-top: 20px;
     transition: transform 0.2s ease;
     cursor: pointer;    
-    }
-    .logo:hover {
-        transform: scale(1.07); 
-    }
+}
+.logo:hover {
+    transform: scale(1.07); 
+}
     
-
 
 .university-name {
     font-family: 'Mountains of Christmas', cursive;
@@ -140,6 +193,8 @@ header {
     padding: 40px 80px;
     flex: 1;
     align-items: flex-start;
+    position: relative;
+    z-index: 10;
 }
 
 .left-panel, .right-panel {
@@ -158,7 +213,6 @@ header {
     position: relative;
 }
 
-/* Haupt-Türchen */
 .main-door {
     width: 150px;
     height: 150px;
@@ -211,42 +265,6 @@ button:hover {
     background-color: #ff4d4d;
 }
 
-
-.box {
-    position: relative;
-    margin: auto;
-    display: block;
-    margin-top: 8%;
-    width: 600px;
-    height: 420px;
-    background: none;
-    background: linear-gradient(to bottom, #33ccff 0%, #ffffff 100%);
-    border: ;
-  }
-  
-  .body {
-    background: ;
-    height: 100%;
-  }
-  
-  
-  
-  @-webkit-keyframes action {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
-  }
-  @keyframes action {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(-10px);
-    }
-  }
   
   .snowflake {
     color: #fff;
@@ -254,7 +272,6 @@ button:hover {
     font-family: Arial, sans-serif;
     text-shadow: 0 0 5px #000;
   }
-  
   @-webkit-keyframes snowflakes-fall {
     0% {
       top: -10%;
