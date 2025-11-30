@@ -464,3 +464,96 @@ button:hover {
     /* Füge einen goldenen Glow um den Text hinzu */
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); 
 }
+/* --- Lichterkette --- */
+.lights {
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap;
+  gap: 30px 40px;
+  padding: 0 0 30px 0; /* kein Abstand oben, nur unten */
+  margin: 0;
+  pointer-events: none;
+}
+
+
+.lights li {
+  flex: none;
+  position: relative;
+  list-style: none;
+  width: 15px;
+  height: 30px;
+  border-radius: 50%; /* rund statt eckig */
+}
+
+/* Lampenfassung */
+.lights li:before {
+  position: absolute;
+  content: "";
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  background-color: #222;
+  border-radius: 50%;
+}
+
+/* Seil / Verbindung */
+.lights li:after {
+  position: absolute;
+  content: "";
+  z-index: -1;
+  top: -2px;
+  left: 50%;
+  width: 54px;
+  height: 5px;
+  border-bottom: 1px solid #222;
+  border-radius: 100%;
+}
+
+.lights li:last-child:after {
+  display: none;
+}
+
+/* Rot & Grün Farben */
+.lights li {
+  --color-red: 255, 0, 0;
+  --color-green: 0, 200, 0;
+}
+
+/* Gerade Lichter (rot) */
+.lights li:nth-child(odd) {
+  background-color: rgba(var(--color-red), 1);
+  box-shadow: 0 5px 24px 3px rgba(var(--color-red), 0.8);
+  animation: lighting-red 3s infinite ease-in-out;
+}
+
+/* Ungerade Lichter (grün) */
+.lights li:nth-child(even) {
+  background-color: rgba(var(--color-green), 1);
+  box-shadow: 0 5px 24px 3px rgba(var(--color-green), 0.8);
+  animation: lighting-green 3s infinite ease-in-out;
+  animation-delay: 1.5s; /* leicht versetzt */
+}
+
+@keyframes lighting-red {
+  0%, 100% {
+    background-color: rgba(var(--color-red), 0.3);
+    box-shadow: 0 5px 24px 3px rgba(var(--color-red), 0.3);
+  }
+  50% {
+    background-color: rgba(var(--color-red), 1);
+    box-shadow: 0 5px 24px 3px rgba(var(--color-red), 1);
+  }
+}
+
+@keyframes lighting-green {
+  0%, 100% {
+    background-color: rgba(var(--color-green), 0.3);
+    box-shadow: 0 5px 24px 3px rgba(var(--color-green), 0.3);
+  }
+  50% {
+    background-color: rgba(var(--color-green), 1);
+    box-shadow: 0 5px 24px 3px rgba(var(--color-green), 1);
+  }
+}
