@@ -465,24 +465,58 @@ button:hover {
     text-shadow: 0 0 8px rgba(255, 215, 0, 0.7); 
 }
 /* --- Lichterkette --- */
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* NICHT schwarz machen */
+body {
+  background-color: white; 
+}
+
+/* Lichterkette Container – verhindert mehrere Reihen */
+#Christmas_Lights {
+  white-space: nowrap;    /* niemals umbrechen */
+  overflow-x: auto;       /* horizontaler Scroll, falls zu schmal */
+  overflow-y: hidden;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* SVG selbst – verhindert Skalierung & Umbrechen */
+#Christmas_Lights svg {
+  display: block;
+  width: max-content;     /* Breite bleibt original → kein Umbrechen */
+  height: 90px;           /* Höhe deiner Lichterkette */
+}
+
+/* UL-Lichterkette direkt unter dem Header */
 .lights {
   display: flex;
   justify-content: center;
-  flex-flow: wrap;
+  flex-flow: row nowrap;  /* ganz wichtig → niemals wraps */
   gap: 30px 40px;
-  padding: 0 0 30px 0; /* kein Abstand oben, nur unten */
+  padding: 0 0 30px 0;    /* KEIN Abstand zum Header oben */
   margin: 0;
   pointer-events: none;
+  overflow: hidden;
 }
 
-
+/* Lampenformen */
 .lights li {
   flex: none;
   position: relative;
   list-style: none;
   width: 15px;
   height: 30px;
-  border-radius: 50%; /* rund statt eckig */
+  border-radius: 50%;
+  --color-red: 255, 0, 0;
+  --color-green: 0, 200, 0;
 }
 
 /* Lampenfassung */
@@ -495,10 +529,9 @@ button:hover {
   width: 10px;
   height: 10px;
   background-color: #222;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
-/* Seil / Verbindung */
 .lights li:after {
   position: absolute;
   content: "";
@@ -515,27 +548,22 @@ button:hover {
   display: none;
 }
 
-/* Rot & Grün Farben */
-.lights li {
-  --color-red: 255, 0, 0;
-  --color-green: 0, 200, 0;
-}
-
-/* Gerade Lichter (rot) */
+/* Rote Lampen */
 .lights li:nth-child(odd) {
   background-color: rgba(var(--color-red), 1);
   box-shadow: 0 5px 24px 3px rgba(var(--color-red), 0.8);
   animation: lighting-red 3s infinite ease-in-out;
 }
 
-/* Ungerade Lichter (grün) */
+/* Grüne Lampen */
 .lights li:nth-child(even) {
   background-color: rgba(var(--color-green), 1);
   box-shadow: 0 5px 24px 3px rgba(var(--color-green), 0.8);
   animation: lighting-green 3s infinite ease-in-out;
-  animation-delay: 1.5s; /* leicht versetzt */
+  animation-delay: 1.5s;
 }
 
+/* Animation Rot */
 @keyframes lighting-red {
   0%, 100% {
     background-color: rgba(var(--color-red), 0.3);
@@ -547,6 +575,7 @@ button:hover {
   }
 }
 
+/* Animation Grün */
 @keyframes lighting-green {
   0%, 100% {
     background-color: rgba(var(--color-green), 0.3);
@@ -557,3 +586,4 @@ button:hover {
     box-shadow: 0 5px 24px 3px rgba(var(--color-green), 1);
   }
 }
+
