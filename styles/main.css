@@ -516,6 +516,41 @@ body {
 }
 
 /* Lampenformen */
+/* ---------------------------
+   Lichterkette: Vollständiger Block
+   inkl. asynchroner Sway-Animation
+   --------------------------- */
+
+/* ---------------------------
+   Lichterkette: Rot/Grün blinking + dauerhafter Sway
+   --------------------------- */
+
+/* ---------------------------
+   Lichterkette: sanftes, abwechselndes Blinken
+   --------------------------- */
+
+/* ---------------------------
+   Lichterkette: Rot/Grün blinking + dauerhafter Sway
+   --------------------------- */
+
+.lights {
+  display: flex;
+  justify-content: space-between; /* füllt komplette Breite, Lichter an den Rändern */
+  flex-flow: row nowrap;           /* niemals umbrechen */
+  gap: 30px 40px;
+  padding: 0 0 30px 0;             /* kein Abstand zum Header oben */
+  margin: 0;
+  pointer-events: none;
+  white-space: nowrap;             /* verhindert Umbruch */
+  overflow: hidden;
+  width: 100vw;                    /* komplette Viewport-Breite */
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);     /* zentriert bei container-padding */
+  z-index: 100;
+}
+
+/* Lampenformen */
 .lights li {
   flex: none;
   position: relative;
@@ -525,9 +560,12 @@ body {
   border-radius: 50%;
   --color-red: 255, 0, 0;
   --color-green: 0, 200, 0;
+
+  /* Ursprung für das Schwingen: oberhalb der Lampe (wie an der Fassung aufgehängt) */
+  transform-origin: 50% -6px;
 }
 
-/* Lampenfassung */
+/* Lampenfassung (oben) */
 .lights li:before {
   position: absolute;
   content: "";
@@ -537,9 +575,10 @@ body {
   width: 10px;
   height: 10px;
   background-color: #222;
-  border-radius: 100%;
+  border-radius: 50%;
 }
 
+/* Seil / Verbindung */
 .lights li:after {
   position: absolute;
   content: "";
@@ -556,22 +595,18 @@ body {
   display: none;
 }
 
-/* Rote Lampen */
+/* --- Basisfarben (nur setzen, Animationen kommen in Gruppen) --- */
 .lights li:nth-child(odd) {
   background-color: rgba(var(--color-red), 1);
   box-shadow: 0 5px 24px 3px rgba(var(--color-red), 0.8);
-  animation: lighting-red 3s infinite ease-in-out;
 }
 
-/* Grüne Lampen */
 .lights li:nth-child(even) {
   background-color: rgba(var(--color-green), 1);
   box-shadow: 0 5px 24px 3px rgba(var(--color-green), 0.8);
-  animation: lighting-green 3s infinite ease-in-out;
-  animation-delay: 1.5s;
 }
 
-/* Animation Rot */
+/* --- Keyframes Beleuchtung (Rot / Grün alternierend) --- */
 @keyframes lighting-red {
   0%, 100% {
     background-color: rgba(var(--color-red), 0.3);
@@ -583,7 +618,6 @@ body {
   }
 }
 
-/* Animation Grün */
 @keyframes lighting-green {
   0%, 100% {
     background-color: rgba(var(--color-green), 0.3);
@@ -594,5 +628,67 @@ body {
     box-shadow: 0 5px 24px 3px rgba(var(--color-green), 1);
   }
 }
+
+/* --- CLEAN, KONTINUIERLICHE SWAY (kein alternate, linear, keine harten Resets) --- */
+@keyframes sway {
+  0%   { transform: rotate(calc(var(--s-start))) translateY(0); }
+  25%  { transform: rotate(calc(var(--s-start) / 2)) translateY(calc(var(--s-bob) / 2)); }
+  50%  { transform: rotate(calc(var(--s-end))) translateY(var(--s-bob)); }
+  75%  { transform: rotate(calc(var(--s-end) / 2)) translateY(calc(var(--s-bob) / 2)); }
+  100% { transform: rotate(calc(var(--s-start))) translateY(0); }
+}
+
+/* --- Asynchrone Gruppen: Beleuchtung (lighting-*) + kontinuierlicher Sway --- */
+/* Gruppe 1 (4n+1) */
+.lights li:nth-child(4n+1) {
+  --s-start: -6deg;
+  --s-end: 6deg;
+  --s-bob: 3px;
+  animation:
+    lighting-red 3s infinite ease-in-out,
+    sway 3.8s linear infinite;
+  animation-delay: 0s, 0.12s; /* kleines Offset nur für Sway */
+}
+
+/* Gruppe 2 (4n+2) */
+.lights li:nth-child(4n+2) {
+  --s-start: -4deg;
+  --s-end: 4deg;
+  --s-bob: 2px;
+  animation:
+    lighting-green 3s infinite ease-in-out,
+    sway 4.6s linear infinite;
+  animation-delay: 0.07s, 0.3s;
+}
+
+/* Gruppe 3 (4n+3) */
+.lights li:nth-child(4n+3) {
+  --s-start: -8deg;
+  --s-end: 8deg;
+  --s-bob: 5px;
+  animation:
+    lighting-red 3s infinite ease-in-out,
+    sway 3.2s linear infinite;
+  animation-delay: 0.14s, 0.06s;
+}
+
+/* Gruppe 4 (4n) */
+.lights li:nth-child(4n) {
+  --s-start: -5deg;
+  --s-end: 5deg;
+  --s-bob: 3px;
+  animation:
+    lighting-green 3s infinite ease-in-out,
+    sway 5s linear infinite;
+  animation-delay: 0.1s, 0.22s;
+}
+
+/* Ende Lichterkette-Block */
+
+
+
+
+
+
 
 
